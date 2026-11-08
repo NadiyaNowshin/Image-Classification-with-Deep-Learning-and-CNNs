@@ -146,21 +146,19 @@ The notebook contains dataset exploration, preprocessing, model architectures, t
 
 ## Results and Findings
 
-Complete this section with the actual results from your experiments.
-
-Include:
-
 | Evaluation Metric | ANN | CNN |
 |---|---|---|
 | Test Accuracy | 87% | 91% |
 | Trainable Parameters | 235,146 | 220,426 |
 
-Also include:
-- Training and validation accuracy plots.
-- Training and validation loss plots.
-- CNN confusion matrix.
-- Examples of five misclassified images.
-- Observations about model performance and overfitting.
+**Why does the CNN outperform the dense network, even with fewer parameters?**
+The dense network flattens each image into a 784-long vector, which destroys the 2D structure: neighbouring pixels are treated no differently from distant ones, and every pixel connects to every neuron. The CNN keeps the spatial layout and uses small shared filters that slide across the image. Weight sharing means the same edge or texture detector is reused at every location, so the network needs far fewer parameters (235,146 vs 220,618) while learning features that are translation-invariant. Stacked convolutional layers build a hierarchy, from edges to textures to parts of garments, and pooling adds tolerance to small shifts. The result was a test accuracy of 0.9163 compared with 0.8790 for the dense model.
+
+**What did I observe about overfitting?**
+The dense baseline showed a growing gap between training and validation performance: training accuracy kept rising to about 93.14% while validation accuracy plateaued near 89.56% and validation loss began to increase after around epoch 9. This indicates it was memorising training images rather than learning general features. The CNN overfitted less because of weight sharing, Batch Normalization and Dropout, and its validation curve followed the training curve more closely, though a small gap remained.
+
+**What would I try next?**
+First, add data augmentation (small rotations, zoom, horizontal flips), which gives the model more varied examples. Second, deepen the CNN with a third convolutional block, tune the learning rate with a scheduler, and use early stopping to stop at the best validation epoch. Third, try transfer learning with a pretrained network such as MobileNetV2, which requires resizing the images. Finally, higher-resolution inputs or targeted augmentation for those classes could help the most.
 
 ## Conclusion
 
