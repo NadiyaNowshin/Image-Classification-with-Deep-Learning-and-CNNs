@@ -152,8 +152,8 @@ Include:
 
 | Evaluation Metric | ANN | CNN |
 |---|---|---|
-| Test Accuracy | Add result | Add result |
-| Trainable Parameters | Add result | Add result |
+| Test Accuracy | 87% | 91% |
+| Trainable Parameters | 235,146 | 220,426 |
 
 Also include:
 - Training and validation accuracy plots.
